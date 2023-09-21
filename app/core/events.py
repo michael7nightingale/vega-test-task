@@ -1,7 +1,10 @@
 from fastapi import FastAPI
+from starlette.middleware.authentication import AuthenticationMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from core.config import get_app_settings
+from api.routes import routers
+from .config import get_app_settings
+from .middleware.authentication import AuthenticationBackend
 
 
 def startup_handler(app: FastAPI):
@@ -26,4 +29,16 @@ def configurate_db(app: FastAPI):
                 }
             },
         generate_schemas=True
+    )
+
+
+def register_routers(app: FastAPI) -> None:
+    for router in routers:
+        app.include_router(router, prefix="/api/v1")
+
+
+def use_authentication_middleware(app: FastAPI):
+    app.add_middleware(
+        AuthenticationMiddleware,
+        backend=AuthenticationBackend()
     )

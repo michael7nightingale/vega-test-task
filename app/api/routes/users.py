@@ -17,20 +17,30 @@ async def login(login_data: LoginUserSchema = Body()):
 
 
 @router.get("/me/data")
+# @login_required
 async def me_profile(request: Request):
     return request.user
 
 
 @router.patch("/me/data")
+# @login_required
 async def me_profile_update(request: Request, update_data: UpdateUserSchema = Body()):
     return
 
 
 @router.get("/me/companies")
+# @login_required
 async def me_companies(request: Request):
     return
 
 
 @router.get("/me/settings")
+# @login_required
 async def me_settings(request: Request):
+    return
+
+
+@router.patch("/me/settings")
+# @login_required
+async def me_settings_update(request: Request):
     return

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Body, Request
 from fastapi.responses import JSONResponse
 
+from app.schemas.companies import CompanySchema
 from app.schemas.users import (
     UpdateUserSchema, UserSchema,
     LoginUserSchema, RegisterUserSchema,
@@ -74,8 +75,8 @@ async def me_settings_update(request: Request, user_settings_data: UserSettingsU
     return settings
 
 
-@router.get("/me/companies")
+@router.get("/me/companies", response_model=list[CompanySchema])
 @login_required
 async def me_companies(request: Request):
     """Getting current user companies list endpoint."""
-    return
+    return request.user.get_companies()

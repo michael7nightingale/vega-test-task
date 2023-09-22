@@ -1,7 +1,10 @@
+from functools import wraps
+
 from jose import jwt, JWTError
 from passlib.hash import sha256_crypt
 from datetime import datetime, timedelta
 from pydantic import ValidationError
+from fastapi import Request, HTTPException
 
 from app.core.config import get_app_settings
 from app.schemas.token import Token
@@ -39,3 +42,16 @@ def hash_password(password: str) -> str:
 
 def verify_password(password: str, hashed_password: str) -> bool:
     return sha256_crypt.verify(password, hashed_password)
+
+
+def login_required(func):
+    """Login required decorator to wrap view."""
+    @wraps(func)
+    async def inner(request: Request, *args, **kwargs):
+        if request.user is None:
+            raise HTTPException(
+                detail="Authentication required.",
+                status_code=403
+            )
+
+    return inner

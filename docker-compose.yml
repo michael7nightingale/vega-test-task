@@ -24,8 +24,8 @@ services:
       - "5444:5444"
     environment:
       - POSTGRES_DB=vega
-      - POSTGRES_USER=pg_user
-      - POSTGRES_PASSWORD=pg_password
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_password
     networks:
       - default
 

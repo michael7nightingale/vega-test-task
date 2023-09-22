@@ -3,8 +3,8 @@ from passlib.hash import sha256_crypt
 from datetime import datetime, timedelta
 from pydantic import ValidationError
 
-from core.config import get_app_settings
-from schemas.token import Token
+from app.core.config import get_app_settings
+from app.schemas.token import Token
 
 
 def encode_jwt_token(user_id: str) -> str:

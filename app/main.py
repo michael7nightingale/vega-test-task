@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from core.events import startup_handler, register_routers, use_authentication_middleware
+from app.core.events import startup_handler, register_routers, use_authentication_middleware
 
 
 def create_app() -> FastAPI:

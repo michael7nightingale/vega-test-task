@@ -5,7 +5,7 @@ import random
 from typing import Optional
 
 from .base import TortoiseModel
-from services.authentication import verify_password, hash_password
+from app.services.authentication import verify_password, hash_password
 
 
 def generate_identifier() -> str:

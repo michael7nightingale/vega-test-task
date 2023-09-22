@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.authentication import AuthenticationMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from api.routes import routers
+from app.api.routes import routers
 from .config import get_app_settings
 from .middleware.authentication import AuthenticationBackend
 
@@ -23,7 +23,7 @@ def configurate_db(app: FastAPI):
                 },
                 'apps': {
                     'models': {
-                        'models': ['models'],
+                        'models': ['app.models'],
                         'default_connection': 'default',
                     }
                 }

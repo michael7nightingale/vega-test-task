@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, Request
 
-from schemas.users import UpdateUserSchema, LoginUserSchema, RegisterUserSchema
+from app.schemas.users import UpdateUserSchema, LoginUserSchema, RegisterUserSchema
 
 
 router = APIRouter(prefix="/users")

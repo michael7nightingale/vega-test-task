@@ -1,9 +1,9 @@
 from functools import lru_cache
 
 from .settings.base import BaseAppSettings, AppEnvTypes
-from core.settings.development import DevAppSettings
-from core.settings.production import ProdAppSettings
-from core.settings.test import TestAppSettings
+from app.core.settings.development import DevAppSettings
+from app.core.settings.production import ProdAppSettings
+from app.core.settings.test import TestAppSettings
 
 
 environments = {

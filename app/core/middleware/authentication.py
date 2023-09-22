@@ -1,10 +1,9 @@
-from fastapi import HTTPException
 from starlette.middleware import authentication
 from starlette.requests import HTTPConnection
 
-from models import User
-from services.authentication import decode_jwt_token
-from schemas.users import UserSchema
+from app.models import User
+from app.services.authentication import decode_jwt_token
+from app.schemas.users import UserSchema
 
 
 class AuthenticationBackend(authentication.AuthenticationBackend):

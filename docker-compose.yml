@@ -11,7 +11,7 @@ services:
     ports:
       - "8000:8000"
     command: >
-      sh -c "gunicorn app.main:create_app -b 0.0.0.0:8000"
+      sh -c "gunicorn app.main:create_app -b 0.0.0.0:8000 --workers 4 --worker-class uvicorn.workers.UvicornWorker --access-logfile -"
     depends_on:
       - db
     networks:

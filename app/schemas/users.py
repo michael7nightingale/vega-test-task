@@ -69,3 +69,15 @@ class UpdateUserSchema(PasswordConfirmationMixin, BaseModel):
         if len(value) != 10:
             raise ValueError("Phone number must be length of 10!")
         return value
+
+
+class UserSettingsSchema(BaseModel):
+    wifi_load_only: bool
+    extra_authentication: bool
+    images_twice: bool
+
+
+class UserSettingsUpdateSchema(BaseModel):
+    wifi_load_only: bool | None = None
+    extra_authentication: bool | None = None
+    images_twice: bool | None = None

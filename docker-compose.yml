@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./app/
+    environment:
+      - DOCKER=1
+    env_file:
+      - ./app/prod.env
+    ports:
+      - "8000:8000"
+    command: >
+      sh - c "gunicorn main:create_app -b 0.0.0.0:8000"
+    depends_on:
+      - db
+    networks:
+      - default
+
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5444:5444"
+    environment:
+      - POSTGRES_DB=vega
+      - POSTGRES_USER=pg_user
+      - POSTGRES_PASSWORD=pg_password
+    networks:
+      - default
+
+
+networks:
+  default: {}

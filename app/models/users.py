@@ -5,6 +5,7 @@ import random
 from typing import Optional
 
 from .base import TortoiseModel
+from .companies import Company
 from app.services.authentication import verify_password, hash_password
 
 
@@ -53,6 +54,9 @@ class User(TortoiseModel):
 
     async def get_settings(self) -> "UserSettings":
         return await self.settings.get()
+
+    async def get_companies(self) -> list[Company]:
+        return await self.companies.all()
 
 
 class UserSettings(TortoiseModel):

@@ -5,6 +5,7 @@ from tortoise.contrib.fastapi import register_tortoise
 from app.api.routes import routers
 from .config import get_app_settings
 from .middleware.authentication import AuthenticationBackend
+from .settings.base import BaseAppSettings, AppEnvTypes
 
 
 def startup_handler(app: FastAPI):
@@ -42,3 +43,7 @@ def use_authentication_middleware(app: FastAPI):
         AuthenticationMiddleware,
         backend=AuthenticationBackend()
     )
+
+
+def use_production_settings() -> None:
+    BaseAppSettings.app_env = AppEnvTypes.prod

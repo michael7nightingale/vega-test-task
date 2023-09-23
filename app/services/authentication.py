@@ -53,5 +53,6 @@ def login_required(func):
                 detail="Authentication required.",
                 status_code=403
             )
-
+        response = await func(request, *args, **kwargs)
+        return response
     return inner

@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 
 
-class ContactPersonSchema(BaseModel):
+class ContactPersonCreateSchema(BaseModel):
     fio: str
     phone: str = Field(max_length=10, min_length=10)
 
@@ -18,6 +18,10 @@ class ContactPersonSchema(BaseModel):
             return value
 
 
+class ContactPersonSchema(ContactPersonCreateSchema):
+    id: str
+
+
 class ContactPersonUpdateSchema(ContactPersonSchema):
     fio: str | None = None
     phone: str | None = None
@@ -30,7 +34,18 @@ class ContactPersonUpdateSchema(ContactPersonSchema):
         return value
 
 
+class WatchListSchema(BaseModel):
+    id: str
+    address: str
+    time_start: datetime
+    time_finished: datetime | None = None
+    is_watched: bool
+    is_finished: bool
+    is_refused: bool
+
+
 class WatchSchema(BaseModel):
+    id: str
     address: str
     time_start: datetime
     time_finished: datetime | None = None
@@ -40,6 +55,12 @@ class WatchSchema(BaseModel):
     refuse_purpose: str | None = None
     note: str
     contact_persons: list[ContactPersonSchema] = Field(default_factory=list)
+
+
+class WatchCreateSchema(BaseModel):
+    address: str
+    time_start: datetime
+    time_finished: datetime | None = None
 
 
 class WatchUpdateSchema(BaseModel):
@@ -57,7 +78,12 @@ class WatchFinishSchema(BaseModel):
     finish_comment: str
 
 
+class TaskCreateSchema(BaseModel):
+    title: str
+
+
 class TaskSchema(BaseModel):
+    id: str
     title: str
     is_finished: bool
     is_refused: bool

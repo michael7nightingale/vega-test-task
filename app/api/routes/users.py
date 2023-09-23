@@ -8,8 +8,9 @@ from app.schemas.users import (
     UserSettingsUpdateSchema, UserSettingsSchema,
 
 )
-from app.models.users import User, UserSettings
+from app.models.users import User
 from app.services.authentication import encode_jwt_token, login_required
+
 
 router = APIRouter(prefix="/users")
 
@@ -28,8 +29,8 @@ async def register(register_data: RegisterUserSchema = Body()):
     return new_user
 
 
-@router.post("/login")
-async def login(login_data: LoginUserSchema = Body()):
+@router.post("/token")
+async def token_login(login_data: LoginUserSchema = Body()):
     """User login (getting access token) endpoint."""
     user = await User.login(**login_data.model_dump(exclude={"confirm_password", "login"}))
     if user is None:

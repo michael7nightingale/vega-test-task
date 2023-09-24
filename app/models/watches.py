@@ -1,6 +1,11 @@
+from uuid import uuid4
+
+from fastapi import UploadFile
 from tortoise import fields, Model
 
 from .base import TortoiseModel
+from ..core.config import get_app_settings
+from ..services.files import filter_image_files, get_filename_extension
 
 
 class IsWatchMixin(TortoiseModel):
@@ -99,6 +104,20 @@ class Object(IsWatchMixin):
     title = fields.CharField(max_length=255)
     description = fields.CharField(max_length=255, default="")
 
+    async def save_documents_images(self, files: list[UploadFile]) -> None:
+        files = filter_image_files(files)
+        settings = get_app_settings()
+        for file in files:
+            document_id = str(uuid4())
+            filepath = settings.FILE_DIR + "documents/" + document_id + get_filename_extension(file.filename)
+            document = await DocumentImage.create(
+                id=document_id,
+                object=self,
+                image_path=filepath
+            )
+            with open(filepath, "wb") as file_save:
+                file_save.write(await file.read())
+
     def __str__(self) -> str:
         return self.title
 
@@ -107,6 +126,23 @@ class ObjectPart(TortoiseModel):
     title = fields.CharField(max_length=255)
     description = fields.TextField(default="")
     object = fields.ForeignKeyField("models.Object", related_name="parts")
+
+    async def save_images(self, files: list[UploadFile]) -> None:
+        files = filter_image_files(files)
+        settings = get_app_settings()
+        for file in files:
+            object_part_image_id = str(uuid4())
+            filepath = settings.FILE_DIR + "objectparts/" + object_part_image_id + get_filename_extension(file.filename)
+            object_part_image = await ObjectPartImage.create(
+                id=object_part_image_id,
+                object_part=self,
+                image_path=filepath
+            )
+            with open(filepath, "wb") as file_save:
+                file_save.write(await file.read())
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class ObjectPartImage(TortoiseModel):

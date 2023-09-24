@@ -1,8 +1,9 @@
-from . import users, watches
+from . import users, watches, tasks
 
 
 routers = [
     users.router,
-    watches.router
+    watches.router,
+    tasks.router,
 
 ]

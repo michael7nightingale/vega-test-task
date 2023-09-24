@@ -10,5 +10,7 @@ class ProdAppSettings(BaseAppSettings):
     ALGORITHM: str
     EXPIRE_MINUTES: int
 
+    FILES_DIR: str = "app/files/"
+
     class Config:
         env_file = "prod.env"

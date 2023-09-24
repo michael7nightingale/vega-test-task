@@ -10,5 +10,7 @@ class TestAppSettings(BaseAppSettings):
     ALGORITHM: str = "HS256"
     EXPIRE_MINUTES: int = 100
 
+    FILES_DIR: str = "app/test_files/"
+
     class Config:
         env_file = "test.env"

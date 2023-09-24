@@ -76,31 +76,3 @@ class WatchRefuseSchema(BaseModel):
 
 class WatchFinishSchema(BaseModel):
     finish_comment: str
-
-
-class TaskCreateSchema(BaseModel):
-    title: str
-
-
-class TaskSchema(BaseModel):
-    id: str
-    title: str
-    is_finished: bool
-    is_refused: bool
-
-
-class TaskUpdateSchema(BaseModel):
-    title: str | None = None
-    is_finished: bool | None = None
-    is_refused: bool | None = None
-
-
-class ObjectSchema(BaseModel):
-    title: str
-    description: str
-    is_watched: str
-
-
-class ObjectUpdateSchema(BaseModel):
-    title: str | None = None
-    description: str | None = None

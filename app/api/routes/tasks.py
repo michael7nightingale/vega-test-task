@@ -3,14 +3,14 @@ from fastapi import APIRouter, Request, Body, Depends
 from app.api.dependencies.watches import get_watch
 from app.api.dependencies.tasks import get_task
 from app.models import Watch, Task
-from app.schemas.watches import TaskSchema, TaskUpdateSchema, TaskCreateSchema
+from app.schemas.tasks import TaskSchema, TaskUpdateSchema, TaskCreateSchema
 from app.services.authentication import login_required
 
 
 router = APIRouter(prefix="/tasks")
 
 
-@router.get("/", response_model=list[TaskSchema])
+@router.get("/{watch_id}", response_model=list[TaskSchema])
 @login_required
 async def get_watch_tasks(
         request: Request,
@@ -19,7 +19,7 @@ async def get_watch_tasks(
     return await watch.tasks.all()
 
 
-@router.post("/", response_model=list[TaskSchema])
+@router.post("/{watch_id}", response_model=list[TaskSchema])
 @login_required
 async def create_watch_tasks(
         request: Request,
@@ -33,7 +33,7 @@ async def create_watch_tasks(
     )
 
 
-@router.patch("/{task_id}/refuse", response_model=TaskSchema)
+@router.patch("/{watch_id}/{task_id}/refuse", response_model=TaskSchema)
 @login_required
 async def refuse_task(
         request: Request,
@@ -43,7 +43,7 @@ async def refuse_task(
     return task
 
 
-@router.patch("/{task_id}/finish", response_model=TaskSchema)
+@router.patch("/{watch_id}/{task_id}/finish", response_model=TaskSchema)
 @login_required
 async def refuse_task(
         request: Request,

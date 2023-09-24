@@ -68,7 +68,7 @@ class Watch(IsWatchMixin):
             .prefetch_related("contact_persons")
         )
 
-    async def save_contacts(self, contact_persons: list[dict]):
+    async def save_contacts(self, contact_persons: list[dict]) -> list[ContactPerson]:
         contact_persons_instances = []
         for contact_person in contact_persons:
             contact_persons_instances.append(
@@ -76,6 +76,15 @@ class Watch(IsWatchMixin):
             )
         await self.contact_persons.add(*contact_persons_instances)
         return contact_persons_instances
+
+    async def save_objects(self, objects: list[dict]) -> list["Object"]:
+        objects_instances = []
+        for object_data in objects:
+            objects_instances.append(
+                await Object.create(**object_data)
+            )
+        await self.contact_persons.add(*objects_instances)
+        return objects_instances
 
 
 class Task(TortoiseModel):
